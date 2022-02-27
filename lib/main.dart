@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lab_03/exam_create.dart';
-import 'package:lab_03/exam_data.dart';
-import 'package:lab_03/exam_list.dart';
+import 'package:lab_03/data/exam_data.dart';
+import 'package:lab_03/screen/authenticate_screen.dart';
+import 'package:lab_03/screen/calendar_screen.dart';
+import 'package:lab_03/screen/create_screen.dart';
+import 'package:lab_03/screen/details_screen.dart';
+import 'package:lab_03/screen/list_screen.dart';
+import 'package:lab_03/screen/main_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -22,39 +26,19 @@ class MyApp extends StatefulWidget {
 }
 
 class MyHomePage extends State<MyApp> {
-  final List<Map<String, String>> _elements = ExamData.examScheduleMap;
-  final String? _title = 'Exam Planner';
-  bool _createExamClick = false;
-
-  void _addNewExam(var newExam) {
-    setState(() {
-      _elements.add(newExam);
-    });
-  }
-
-  void _scheduleExam() {
-    setState(() {
-      _createExamClick = !_createExamClick;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: _title.toString(),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(_title.toString()),
-            actions: [
-              IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () => _scheduleExam()),
-            ],
-          ),
-          body: _createExamClick
-              ? ExamCreateWidget(_addNewExam, _scheduleExam)
-              : ExamListWidget(_elements),
-        ));
+        title: ExamData.title.toString(),
+        routes: {
+          AuthenticateScreen.routeName: (ctx) =>
+              const AuthenticateScreen(null, null, null),
+          CreateExamScreen.routeName: (ctx) => const CreateExamScreen(),
+          ListExamScreen.routeName: (ctx) => ListExamScreen(List.empty()),
+          DetailsExamScreen.routeName: (ctx) => const DetailsExamScreen(),
+          CalendarExamScreen.routeName: (ctx) => const CalendarExamScreen(),
+        },
+        home: const MainScreen());
   }
 }

@@ -1,0 +1,3 @@
+enum Role {
+  student, teacher
+}
