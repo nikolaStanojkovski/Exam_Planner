@@ -1,11 +1,12 @@
+import 'package:exam_planner/data/exam_data.dart';
+import 'package:exam_planner/screen/authenticate_screen.dart';
+import 'package:exam_planner/screen/calendar_screen.dart';
+import 'package:exam_planner/screen/create_screen.dart';
+import 'package:exam_planner/screen/details_screen.dart';
+import 'package:exam_planner/screen/list_screen.dart';
+import 'package:exam_planner/screen/main_screen.dart';
+import 'package:exam_planner/screen/maps_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_03/data/exam_data.dart';
-import 'package:lab_03/screen/authenticate_screen.dart';
-import 'package:lab_03/screen/calendar_screen.dart';
-import 'package:lab_03/screen/create_screen.dart';
-import 'package:lab_03/screen/details_screen.dart';
-import 'package:lab_03/screen/list_screen.dart';
-import 'package:lab_03/screen/main_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -38,6 +39,7 @@ class MyHomePage extends State<MyApp> {
           ListExamScreen.routeName: (ctx) => ListExamScreen(List.empty()),
           DetailsExamScreen.routeName: (ctx) => const DetailsExamScreen(),
           CalendarExamScreen.routeName: (ctx) => const CalendarExamScreen(),
+          MapsExamScreen.routeName: (ctx) => const MapsExamScreen(),
         },
         home: const MainScreen());
   }

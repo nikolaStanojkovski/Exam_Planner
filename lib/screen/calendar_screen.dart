@@ -1,7 +1,7 @@
+import 'package:exam_planner/model/exam.dart';
+import 'package:exam_planner/util/date_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_03/utils/date_utils.dart';
-import 'package:lab_03/model/exam.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CalendarExamScreen extends StatelessWidget {

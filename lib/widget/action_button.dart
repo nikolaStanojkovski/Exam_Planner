@@ -6,8 +6,7 @@ class ActionButton extends StatelessWidget {
   final IconData _icon;
   final void Function(BuildContext) _clickFunction;
 
-  const ActionButton(this._icon, this._clickFunction, this._context,
-      {Key? key})
+  const ActionButton(this._icon, this._clickFunction, this._context, {Key? key})
       : super(key: key);
 
   @override

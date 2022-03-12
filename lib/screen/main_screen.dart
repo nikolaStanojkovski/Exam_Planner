@@ -1,11 +1,11 @@
+import 'package:exam_planner/data/exam_data.dart';
+import 'package:exam_planner/model/exam.dart';
+import 'package:exam_planner/model/role.dart';
+import 'package:exam_planner/model/user.dart';
+import 'package:exam_planner/util/notification_api.dart';
+import 'package:exam_planner/widget/action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_03/data/exam_data.dart';
-import 'package:lab_03/model/exam.dart';
-import 'package:lab_03/model/role.dart';
-import 'package:lab_03/model/user.dart';
-import 'package:lab_03/utils/notification_api.dart';
-import 'package:lab_03/widget/action_button.dart';
 
 import 'authenticate_screen.dart';
 import 'calendar_screen.dart';
@@ -86,7 +86,8 @@ class _MainScreenState extends State<MainScreen> {
     if (_currentUser!.role == Role.teacher) {
       buttons.add(ActionButton(Icons.add, _scheduleExam, context));
     }
-    buttons.add(ActionButton(Icons.calendar_today_rounded, _openCalendar, context));
+    buttons.add(
+        ActionButton(Icons.calendar_today_rounded, _openCalendar, context));
     buttons.add(ActionButton(Icons.logout, _logout, context));
 
     return buttons;

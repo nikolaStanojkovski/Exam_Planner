@@ -1,13 +1,16 @@
+import 'package:exam_planner/model/exam.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:lab_03/model/exam.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'date_utils.dart';
 
 class NotificationApi {
-  static final _notifications = FlutterLocalNotificationsPlugin();
+  static const String notificationTitle = 'Exam Reminder';
+  static const String notificationPayload = 'exam.reminder';
   static int notificationCounter = 0;
+
+  static final _notifications = FlutterLocalNotificationsPlugin();
 
   static Future _notificationDetails() async {
     return const NotificationDetails(
@@ -60,32 +63,30 @@ class NotificationApi {
 
   static scheduleNotification(Exam exam) {
     DateTime examDate = DateTimeUtils.createDateTime(exam.date);
-    String notificationTitle = 'Exam Reminder';
-    String notificationPayload = 'exam.reminder';
 
     _showScheduledNotification(
-      id: notificationCounter++,
+        id: notificationCounter++,
         title: notificationTitle,
         body:
             'An exam is starting in 30 minutes for the subject ${exam.subjectName}, which will last ${exam.time}',
         payload: notificationPayload,
         scheduledDate: examDate.subtract(const Duration(minutes: 30)));
     _showScheduledNotification(
-      id: notificationCounter++,
+        id: notificationCounter++,
         title: notificationTitle,
         body:
             'An exam is starting in 5 minutes for the subject ${exam.subjectName}, which will last ${exam.time}',
         payload: notificationPayload,
         scheduledDate: examDate.subtract(const Duration(minutes: 5)));
     _showScheduledNotification(
-      id: notificationCounter++,
+        id: notificationCounter++,
         title: notificationTitle,
         body:
             'Ann exam starting right now for the subject ${exam.subjectName}, which will last ${exam.time}',
         payload: notificationPayload,
         scheduledDate: examDate);
     _showScheduledNotification(
-      id: notificationCounter++,
+        id: notificationCounter++,
         title: notificationTitle,
         body:
             'An exam just finished for the subject ${exam.subjectName}, which lasted ${exam.time}',
@@ -95,10 +96,24 @@ class NotificationApi {
             minutes: int.parse(exam.time.split(":")[1]))));
   }
 
-  static scheduleNotifications(List<Exam> exams) {
+  static scheduleTimeNotifications(List<Exam> exams) {
     for (var element in exams) {
       scheduleNotification(element);
     }
+  }
+
+  static Future showLocationNotification(
+      String subjectName, String distance) async {
+    String notificationBody =
+        'You are $distance close to the location of the exam for subject $subjectName';
+
+    _notifications.show(
+      notificationCounter++,
+      notificationTitle,
+      notificationBody,
+      await _notificationDetails(),
+      payload: notificationPayload,
+    );
   }
 
   static void cancelNotifications() => _notifications.cancelAll();

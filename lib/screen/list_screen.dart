@@ -1,8 +1,8 @@
+import 'package:exam_planner/model/exam.dart';
+import 'package:exam_planner/screen/details_screen.dart';
+import 'package:exam_planner/util/notification_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_03/model/exam.dart';
-import 'package:lab_03/screen/details_screen.dart';
-import 'package:lab_03/utils/notification_api.dart';
 
 class ListExamScreen extends StatelessWidget {
   static const routeName = '/exam/list';
@@ -11,14 +11,14 @@ class ListExamScreen extends StatelessWidget {
   const ListExamScreen(this._elements, {Key? key}) : super(key: key);
 
   void _examDetails(BuildContext context, Exam exam) {
-    Navigator.of(context).pushNamed(DetailsExamScreen.routeName,
-        arguments: exam);
+    Navigator.of(context)
+        .pushNamed(DetailsExamScreen.routeName, arguments: exam);
   }
 
   @override
   Widget build(BuildContext context) {
     NotificationApi.init();
-    NotificationApi.scheduleNotifications(_elements);
+    NotificationApi.scheduleTimeNotifications(_elements);
 
     return ListView.builder(
       itemCount: _elements.length,

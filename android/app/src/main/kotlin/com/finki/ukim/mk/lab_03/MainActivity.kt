@@ -1,4 +1,4 @@
-package com.finki.ukim.mk.lab_03
+package com.finki.ukim.mk.exam_planner
 
 import io.flutter.embedding.android.FlutterActivity
 

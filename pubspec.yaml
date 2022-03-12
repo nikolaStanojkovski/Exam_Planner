@@ -1,5 +1,5 @@
-name: lab_03
-description: Laboratory exercise 3
+name: exam_planner
+description: Exam Planner application
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -32,6 +32,11 @@ dependencies:
   syncfusion_flutter_calendar: ^19.4.53
   flutter_local_notifications: ^9.3.2
   timezone: ^0.8.0
+  dio: ^4.0.4
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.1.2
+  location: ^4.3.0
+  geocode: ^1.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -25,7 +25,8 @@ class DateTimeUtils {
         timeParts[1].characters.length != 2 ||
         int.parse(timeParts[1]) > 60 ||
         int.parse(timeParts[1]) < 0 ||
-        DateTime.tryParse("${dateParts[2]}-${dateParts[1]}-${dateParts[0]}") == null);
+        DateTime.tryParse("${dateParts[2]}-${dateParts[1]}-${dateParts[0]}") ==
+            null);
   }
 
   static bool validateTime(String value) {

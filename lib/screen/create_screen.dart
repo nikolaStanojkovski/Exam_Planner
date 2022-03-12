@@ -1,10 +1,14 @@
+import 'package:exam_planner/model/exam.dart';
+import 'package:exam_planner/util/date_utils.dart';
+import 'package:exam_planner/util/location_utils.dart';
+import 'package:exam_planner/widget/form/button_form_field.dart';
+import 'package:exam_planner/widget/form/form_field.dart';
+import 'package:exam_planner/widget/form/text_form_field.dart';
+import 'package:exam_planner/widget/map/map_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_03/model/exam.dart';
-import 'package:lab_03/utils/date_utils.dart';
-import 'package:lab_03/widget/button_form_field.dart';
-import 'package:lab_03/widget/form_field.dart';
-import 'package:lab_03/widget/text_form_field.dart';
+import 'package:geocode/geocode.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CreateExamScreen extends StatefulWidget {
   static const routeName = '/exam/create';
@@ -21,6 +25,8 @@ class _CreateExamScreenState extends State<CreateExamScreen> {
   final TextEditingController _subjectNameController = TextEditingController();
   final TextEditingController _examDateController = TextEditingController();
   final TextEditingController _examTimeController = TextEditingController();
+  LatLng? _locationController;
+  String? _examAddress;
 
   late BuildContext _buildContext;
 
@@ -59,6 +65,33 @@ class _CreateExamScreenState extends State<CreateExamScreen> {
     return null;
   }
 
+  void _validateLocation(LatLng? location) {
+    setState(() {
+      if (location != null) {
+        _locationController = location;
+        _getLocationAddress();
+      }
+    });
+  }
+
+  Future<void> _getLocationAddress() async {
+    Address address =
+        await LocationUtils.getLocationAddress(_locationController!);
+    setState(() {
+      _examAddress =
+          '${address.streetAddress}, ${address.city} (${address.countryCode})';
+    });
+  }
+
+  void _chooseLocation() {
+    showDialog(
+      context: _buildContext,
+      builder: (context) {
+        return MapDialog(_validateLocation);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -77,15 +110,33 @@ class _CreateExamScreenState extends State<CreateExamScreen> {
         FormTextField(_examDateController, 'Date (format: DD:MM:YYYY hh:mm)',
             const EdgeInsets.fromLTRB(30, 5, 5, 30), false, _validateDate),
         FormTextField(_examTimeController, 'Duration (format: hh:mm)',
-            const EdgeInsets.fromLTRB(30, 5, 5, 45), false, _validateTime),
+            const EdgeInsets.fromLTRB(30, 5, 5, 30), false, _validateTime),
+        ButtonFormField(
+            const EdgeInsets.fromLTRB(0, 0, 0, 45),
+            _chooseLocation,
+            (_locationController == null || _examAddress == null)
+                ? "Select Location"
+                : _examAddress!,
+            Colors.black12,
+            Colors.white),
         ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                var exam = Exam(_subjectNameController.text,
-                    _examDateController.text, _examTimeController.text);
+                if (_locationController == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Please select the exam location'),
+                    duration: Duration(seconds: 1),
+                  ));
+                } else {
+                  var exam = Exam(
+                      _subjectNameController.text,
+                      _examDateController.text,
+                      _examTimeController.text,
+                      _locationController!);
 
-                _addExamFunction(exam);
-                _navigateOut();
+                  _addExamFunction(exam);
+                  _navigateOut();
+                }
               }
             },
             child: const Text("Save"),

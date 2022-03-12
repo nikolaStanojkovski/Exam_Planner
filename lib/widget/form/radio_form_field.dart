@@ -1,6 +1,6 @@
+import 'package:exam_planner/model/role.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lab_03/model/role.dart';
 
 class FormRadioField extends StatelessWidget {
   final Role? _roleController;
@@ -8,7 +8,10 @@ class FormRadioField extends StatelessWidget {
   final String _title;
   final Function(Object?) _stateFunction;
 
-  const FormRadioField(this._roleController, this._value, this._title, this._stateFunction, {Key? key}) : super(key: key);
+  const FormRadioField(
+      this._roleController, this._value, this._title, this._stateFunction,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,5 +26,4 @@ class FormRadioField extends StatelessWidget {
       ),
     );
   }
-
 }

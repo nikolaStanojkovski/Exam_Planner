@@ -1,4 +1,4 @@
-import 'package:lab_03/model/role.dart';
+import 'package:exam_planner/model/role.dart';
 
 class User {
   late String username;
